@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#06233d">
+<title>AVR Dashboard Hub — Responsive Redesign</title>
+<style>
+:root{--navy:#06233d;--navy2:#092d4c;--blue:#147ce5;--bg:#f4f7fb;--text:#17324d;--muted:#6b7b88;--card:#fff;--line:#d9e3ec;--green:#16885b;--orange:#b96c00;--red:#c73737;--purple:#805ad5}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}button,input,select,textarea{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #83bcff;outline-offset:2px}
+header{min-height:70px;background:var(--navy);color:#fff;display:flex;align-items:center;gap:18px;padding:12px 22px;position:sticky;top:0;z-index:20}.brand{font-weight:900;font-size:24px;white-space:nowrap}.brand span{font-size:11px;display:block;opacity:.8;margin-top:2px}.top-search{max-width:560px;flex:1;margin:auto}.top-search input{width:100%;background:#214866;border:1px solid #355a75;border-radius:24px;padding:11px 16px;color:#fff}.top-search input::placeholder{color:#dce9f4}.user{white-space:nowrap;font-size:13px}
+.layout{display:grid;grid-template-columns:205px minmax(0,1fr);min-height:calc(100vh - 70px)}aside{background:var(--navy2);color:#fff;padding:18px 12px}nav a{display:block;color:#dce8f2;text-decoration:none;padding:13px 12px;border-radius:9px;margin:5px 0;font-weight:700}nav a.active,nav a:hover{background:var(--blue);color:#fff}main{padding:22px;max-width:1550px;width:100%;margin:auto}h1{margin:0 0 4px;font-size:28px}h2{font-size:19px;margin:0 0 12px}h3{font-size:16px;margin:0 0 12px}.sub{color:var(--muted);margin:0 0 18px;line-height:1.45}.muted{color:var(--muted)}.small{font-size:12px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.grid5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}.card{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:15px;box-shadow:0 2px 8px #0b294010;min-width:0}.kpi strong{display:block;font-size:29px;margin:6px 0}.kpi small{color:var(--muted)}.red{border-top:4px solid #e53935}.orange{border-top:4px solid #f39c12}.green{border-top:4px solid #22a06b}.purple{border-top:4px solid #805ad5}.blue{border-top:4px solid var(--blue)}
+.main-grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(270px,1fr);gap:14px;margin-top:14px}.stack{display:grid;gap:14px;align-content:start}.map-shell{height:390px;border-radius:10px;overflow:hidden;background:#e8f0f5;position:relative}.map-placeholder{height:100%;display:grid;place-items:center;text-align:center;padding:24px;color:#31536e;background:linear-gradient(135deg,#e5eef5,#f8fbfd)}.map-placeholder p{max-width:430px;line-height:1.5}.map-tools{display:flex;gap:8px;flex-wrap:wrap}.badge{display:inline-block;border-radius:99px;padding:5px 8px;font-size:11px;font-weight:800;background:#edf3f8;color:#36536a}.badge.blue-b{background:#e5f1ff;color:#145aa0}.badge.orange-b{background:#fff1dc;color:#8a5100}.badge.green-b{background:#e4f7ed;color:#14623f}.badge.red-b{background:#ffebeb;color:#a12828}.badge.purple-b{background:#eee8ff;color:#5638a5}
+button,.button{border:0;border-radius:8px;padding:10px 13px;font-weight:700;background:var(--blue);color:white}.button.secondary,button.secondary{background:#eaf1f7;color:#20415c;border:1px solid #d1dee8}.button.danger,button.danger{background:#fff0f0;color:#a12828;border:1px solid #f2caca}.button:disabled{opacity:.55;cursor:not-allowed}
+.points{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}.progress{height:10px;background:#e5edf3;border-radius:20px;overflow:hidden}.progress>i{display:block;height:100%;background:#18b66b;width:100%}
+.table-controls{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.table-controls input,.table-controls select{border:1px solid #ccd9e4;border-radius:8px;padding:10px;background:#fff;color:var(--text);min-width:130px}.table-controls input{flex:1;min-width:180px}.tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:680px}th,td{padding:11px 8px;border-bottom:1px solid #e2e9ef;text-align:left;font-size:13px;vertical-align:middle}th{color:#607180;font-size:11px;text-transform:uppercase;letter-spacing:.04em}tbody tr:hover{background:#f8fbfe}.alert{padding:11px;border-left:4px solid #e53935;background:#fff5f5;border-radius:7px;margin:8px 0;font-size:13px;line-height:1.45}.alert.info{border-color:var(--blue);background:#f0f7ff}.alert.success{border-color:var(--green);background:#effaf4}.workflow-step{display:flex;gap:9px;align-items:flex-start;margin:12px 0;font-size:13px}.workflow-dot{width:10px;height:10px;border-radius:50%;background:#d4dee7;flex:none;margin-top:3px}.workflow-dot.done{background:var(--green)}.workflow-dot.current{background:var(--blue)}
+.actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}.action{padding:14px;border-radius:11px;color:#fff;font-weight:800;text-decoration:none;display:block}.action small{display:block;font-weight:400;margin-top:5px;opacity:.9}.a1{background:var(--blue)}.a2{background:#16885b}.a3{background:var(--purple)}.a4{background:#263746}
+dialog{border:0;border-radius:16px;padding:0;width:min(620px,calc(100% - 24px));max-height:90vh;overflow:auto;box-shadow:0 20px 70px #00182c55;color:var(--text)}dialog::backdrop{background:#041c30a8}.modal-head{padding:18px 20px;background:#f1f7fc;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center}.modal-body{padding:20px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-weight:700;font-size:13px}.field input,.field select,.field textarea{width:100%;border:1px solid #cbd9e5;border-radius:8px;padding:11px;background:#fff;color:var(--text)}.field textarea{min-height:82px;resize:vertical}.form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px;flex-wrap:wrap}.toast{position:fixed;top:84px;right:16px;z-index:50;max-width:min(420px,calc(100% - 32px));background:#123d5d;color:#fff;padding:13px 16px;border-radius:10px;box-shadow:0 8px 28px #00182c40;display:none}.toast.show{display:block}.empty{text-align:center;padding:24px;color:var(--muted)}.mobile-nav{display:none}
+@media(max-width:1100px){.grid5{grid-template-columns:repeat(3,minmax(0,1fr))}.layout{grid-template-columns:76px minmax(0,1fr)}aside nav span{display:none}nav a{text-align:center;padding:13px 5px}.brand span{display:none}.main-grid{grid-template-columns:minmax(0,1.5fr) minmax(250px,1fr)}}
+@media(max-width:760px){header{min-height:60px;padding:9px 12px;gap:9px}.brand{font-size:19px}.top-search{display:none}.user{font-size:0;margin-left:auto}.user:after{content:"◉";font-size:23px}.layout{display:block;min-height:auto}aside{display:none}main{padding:14px 12px 86px}h1{font-size:23px}.sub{font-size:13px;margin-bottom:14px}.grid5{display:flex;overflow-x:auto;gap:9px;padding-bottom:5px}.kpi{min-width:145px}.kpi strong{font-size:25px}.main-grid{display:flex;flex-direction:column}.map-shell{height:290px}.points{grid-template-columns:1fr}.actions{grid-template-columns:1fr 1fr}.action{font-size:13px;padding:12px}.mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;min-height:64px;background:#fff;border-top:1px solid #d5e0e8;z-index:30;justify-content:space-around;padding-bottom:env(safe-area-inset-bottom)}.mobile-nav a{flex:1;text-align:center;text-decoration:none;color:#607180;font-size:10px;font-weight:800;padding-top:8px}.mobile-nav a b{display:block;font-size:20px;margin-bottom:2px}.mobile-nav .active{color:var(--blue)}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.modal-body{padding:15px}.table-controls input{min-width:100%;}.table-controls select{flex:1}.section-head{align-items:flex-start}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+
+<style id="avr-redesign">
+:root{--avr-blue:#0757c9;--avr-blue2:#0b74ef;--avr-navy:#082d63;--avr-ink:#132947;--avr-bg:#f2f6fc;--avr-line:#d9e5f4;--avr-radius:16px}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{background:var(--avr-bg);color:var(--avr-ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:linear-gradient(110deg,#0649aa,#0878ef)!important;color:#fff!important;box-shadow:0 5px 18px #073e8a22}
+header a,header button{color:inherit}
+main{max-width:1500px!important;padding-top:18px!important}
+section,.card,.panel,.stat,.metric,.map-card{border-radius:var(--avr-radius)!important}
+.grid5{gap:12px!important}
+.grid5>*{border:1px solid var(--avr-line);box-shadow:0 4px 16px #143d7110}
+.main-grid{gap:14px!important}
+button,.button,[role=button],input[type=submit]{border-radius:10px!important;transition:transform .15s ease,box-shadow .15s ease}
+button:hover,.button:hover,input[type=submit]:hover{box-shadow:0 5px 14px #0757c925}
+input,select,textarea{border-radius:10px!important;border-color:#cbd9eb!important;min-height:42px}
+a{overflow-wrap:anywhere}
+.avr-brand-strip{display:flex;align-items:center;gap:12px;margin:0 0 14px;padding:16px 18px;border-radius:18px;background:linear-gradient(115deg,#063c8b,#0876ed);color:#fff;box-shadow:0 8px 24px #0757c922}
+.avr-brand-mark{display:grid;place-items:center;flex:0 0 48px;height:48px;border-radius:14px;background:#ffffff20;font-size:26px}
+.avr-brand-strip h1{font-size:clamp(20px,3vw,29px);line-height:1.15;margin:0 0 4px;color:#fff}
+.avr-brand-strip p{margin:0;color:#e4efff;font-size:13px}
+.avr-modules{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:9px;margin:0 0 16px}
+.avr-module{display:flex;align-items:center;gap:9px;min-height:64px;padding:11px 10px;border:1px solid #d7e5f8;border-radius:13px;background:#fff;color:#15355f;text-decoration:none;box-shadow:0 3px 12px #173c7010;font-size:12px;font-weight:750}
+.avr-module .ico{display:grid;place-items:center;width:34px;height:34px;flex:0 0 34px;border-radius:10px;background:#eaf3ff;color:#0757c9;font-size:18px}
+.avr-module small{display:block;font-weight:500;color:#647792;margin-top:3px}
+.avr-module:hover{border-color:#80b6ff;transform:translateY(-1px)}
+.avr-demo-note{margin:0 0 14px;padding:10px 13px;border:1px solid #f0dba0;border-radius:12px;background:#fff9e9;color:#77560a;font-size:12px}
+#reports,#mapCard,#points,.actions{scroll-margin-top:80px}
+@media(max-width:1050px){.avr-modules{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:620px){.avr-brand-strip{flex-wrap:wrap}.avr-brand-strip #avrInstallButton{margin-left:0!important;padding:8px 10px!important}
+ main{padding:10px!important}
+ .avr-brand-strip{padding:13px;border-radius:14px}
+ .avr-modules{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ .avr-module{min-height:58px;padding:8px;font-size:11px}
+ .avr-module .ico{width:30px;height:30px;flex-basis:30px;font-size:16px}
+ .grid5{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .main-grid{grid-template-columns:minmax(0,1fr)!important}
+}
+</style>
+
+
+<meta name="theme-color" content="#0757c9">
+<meta name="description" content="AVR Dashboard Hub — responsive Abandoned Vehicle Report prototype. Demo data only.">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icons/avr-icon.svg" type="image/svg+xml">
+
+</head>
+<body>
+<header>
+  <div class="brand">🚗 AVR<span>Abandoned Vehicle Report · Demo</span></div>
+  <div class="top-search"><input id="globalSearch" type="search" placeholder="Search case, vehicle, or location…" aria-label="Search reports"></div>
+  <div class="user">Demo Workspace · Local Data</div>
+</header>
+<div class="layout">
+<aside><nav aria-label="Main navigation">
+<a class="active" href="#top">⌂ <span>Dashboard</span></a>
+<a href="#mapCard">🗺️ <span>Map View</span></a>
+<a href="#reports">📄 <span>Reports</span></a>
+<a href="#points">🏆 <span>Points & Incentives</span></a>
+<a href="#actions">⚙️ <span>Tools</span></a>
+</nav></aside>
+<main id="top">
+
+<div class="avr-brand-strip">
+  <div class="avr-brand-mark" aria-hidden="true">🚘</div>
+  <div><h1>AVR Dashboard Hub</h1><p>Abandoned Vehicle Report · Report · Verify · Track · Resolve</p></div>
+</div>
+<div class="avr-demo-note"><strong>Prototype mode:</strong> sample reports and map markers are illustrative only. This demo is not connected to live GPS, police/government systems, or real towing dispatch.</div>
+<nav class="avr-modules" aria-label="AVR modules">
+  <a class="avr-module" href="#reportDialog"><span class="ico">📷</span><span>Report Vehicle<small>Public reports</small></span></a>
+  <a class="avr-module" href="#owner-report-module"><span class="ico">🧑‍🔧</span><span>Owner Report<small>Breakdown / fuel</small></span></a>
+  <a class="avr-module" href="#mapCard"><span class="ico">🗺️</span><span>Live Map<small>Demo locations</small></span></a>
+  <a class="avr-module" href="#reports"><span class="ico">📋</span><span>Case Management<small>Search & status</small></span></a>
+  <a class="avr-module" href="#notifications-module"><span class="ico">🔔</span><span>Notifications<small>Activity updates</small></span></a>
+  <a class="avr-module" href="#chat-room-module"><span class="ico">💬</span><span>Chat Room<small>Community concept</small></span></a>
+  <a class="avr-module" href="#great-find-module"><span class="ico">🛍️</span><span>Great Find Market<small>Local marketplace</small></span></a>
+</nav>
+
+<div class="section-head"><div><h1>Dashboard</h1><div class="sub">Report · Track · Safer Communities</div></div><button id="openReportTop">＋ New Demo Report</button></div>
+<section class="grid5" aria-label="Report summary">
+<div class="card kpi blue"><small>Total Reports</small><strong id="totalCount">0</strong><small>All demo cases</small></div>
+<div class="card kpi orange"><small>Under Review</small><strong id="reviewCount">0</strong><small>Awaiting review</small></div>
+<div class="card kpi green"><small>Verified Abandoned</small><strong id="verifiedCount">0</strong><small>Demo status only</small></div>
+<div class="card kpi purple"><small>Resolved</small><strong id="resolvedCount">0</strong><small>Closed demo cases</small></div>
+<div class="card kpi red"><small>Priority Flags</small><strong id="priorityCount">0</strong><small>Manual review required</small></div>
+</section>
+<section class="main-grid">
+<div class="stack">
+<div id="mapCard" class="card">
+<div class="section-head"><h2>📍 Vehicle Report Map <span class="badge blue-b">DEMO</span></h2><div class="map-tools"><button class="secondary" id="mapMode">Map info</button><button id="navigateBtn">🧭 Directions</button></div></div>
+<div class="map-shell" id="mapShell"><div class="map-placeholder"><div><strong>🗺️ Demo map view</strong><p>This prototype uses sample case locations only. Connect to the internet to load the optional free OpenStreetMap view; no live GPS or agency feed is connected.</p><button id="loadMapBtn">Try loading free map</button></div></div></div>
+<p class="small muted" style="margin:10px 0 0">Sample locations are illustrative and may not represent actual vehicles. Never use demo markers for enforcement or towing decisions.</p>
+</div>
+<div class="points" id="points">
+<div class="card"><h3>🛡️ Reporting Points (Demo)</h3><h2 id="pointsCount">0 points</h2><div class="progress"><i id="pointsBar" style="width:0%"></i></div><p class="small muted">Demo points are illustrative only; no insurer or reward program is connected.</p></div>
+<div class="card"><h3>🏆 Next Milestone</h3><h2>25 demo reports</h2><p id="milestoneText">Submit a demo report to begin.</p><div class="progress"><i id="milestoneBar" style="width:0%"></i></div></div>
+</div>
+<div id="reports" class="card">
+<div class="section-head"><h2>📋 Recent Reports</h2><button class="secondary" id="exportBtn">⬇ Export CSV</button></div>
+<div class="table-controls"><input id="reportSearch" type="search" placeholder="Search case, vehicle, location…" aria-label="Filter reports"><select id="statusFilter" aria-label="Filter by status"><option value="">All statuses</option><option>New Report</option><option>Under Review</option><option>Verified Abandoned</option><option>Owner Notified</option><option>Towing Scheduled</option><option>Resolved</option><option>Needs Manual Review</option></select><button class="secondary" id="clearFilters">Clear filters</button></div>
+<div class="tablewrap"><table><thead><tr><th>Case ID</th><th>Vehicle</th><th>Location</th><th>Status</th><th>Priority</th><th>Action</th></tr></thead><tbody id="reportRows"></tbody></table></div>
+<div id="reportSummary" class="small muted" style="margin-top:10px" aria-live="polite"></div>
+</div>
+</div>
+<div class="stack">
+<div class="card"><h2>🚨 Priority Alerts</h2><div id="alertsList"></div></div>
+<div class="card"><h3>🔄 Case Workflow</h3><div class="workflow-step"><i class="workflow-dot done"></i><div><b>Report received</b><div class="small muted">Demo form submitted</div></div></div><div class="workflow-step"><i class="workflow-dot current"></i><div><b>Authority review</b><div class="small muted">A real deployment would require authorized review</div></div></div><div class="workflow-step"><i class="workflow-dot"></i><div><b>Owner contact / notice</b><div class="small muted">Not connected in this prototype</div></div></div><div class="workflow-step"><i class="workflow-dot"></i><div><b>Towing assignment</b><div class="small muted">No dispatch or tow order is sent</div></div></div><div class="workflow-step"><i class="workflow-dot"></i><div><b>Resolved</b><div class="small muted">Update demo status from the report list</div></div></div></div>
+<div class="card"><h3>🔐 Privacy & Prototype Limits</h3><p class="small muted">Reports entered here are stored only in this browser on this device. This demo does not send data to an agency, identify vehicle owners, verify stolen vehicles, or authorize towing.</p><div class="alert info">Use fictional data while testing. Avoid entering real license plates, VINs, names, or private addresses.</div><button class="secondary" id="resetBtn">Reset demo data</button></div>
+</div>
+</section>
+<section id="actions" class="actions">
+<a class="action a1" href="#reportDialog" id="reportAction">📷 Report a Vehicle<small>Submit a new demo case</small></a>
+<a class="action a2" href="#reports" id="searchAction">🔎 Search Reports<small>Filter the demo case list</small></a>
+<a class="action a3" href="#reports" id="analyticsAction">📊 Export Data<small>Download CSV report data</small></a>
+<a class="action a4" href="#top" id="adminAction">🏛️ Demo Admin<small>Review and update sample statuses</small></a>
+</section>
+
+<section class="avr-modules-detail" aria-label="Additional AVR module previews" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px;margin-top:14px">
+  <article id="owner-report-module" style="background:#fff;border:1px solid #d9e5f4;border-radius:15px;padding:15px">
+    <h2 style="font-size:16px;margin:0 0 6px">🧑‍🔧 Owner Vehicle Help</h2>
+    <p style="font-size:13px;margin:0 0 10px;color:#536984">For a breakdown, flat tire, or running out of fuel. A real agency alert is not sent by this prototype.</p>
+    <button type="button" onclick="alert('Owner-report preview only. Real agency notifications require an approved service integration.')">Preview owner report</button>
+  </article>
+  <article id="notifications-module" style="background:#fff;border:1px solid #d9e5f4;border-radius:15px;padding:15px">
+    <h2 style="font-size:16px;margin:0 0 6px">🔔 Notifications</h2>
+    <p style="font-size:13px;margin:0;color:#536984">Demo alerts can reflect local sample cases. No SMS, email, or agency alert is sent.</p>
+  </article>
+  <article id="chat-room-module" style="background:#fff;border:1px solid #d9e5f4;border-radius:15px;padding:15px">
+    <h2 style="font-size:16px;margin:0 0 6px">💬 AVR Chat Room</h2>
+    <p style="font-size:13px;margin:0 0 10px;color:#536984">Community chat concept. Production chat needs accounts, moderation, blocking, and privacy controls.</p>
+    <button type="button" onclick="alert('Chat room preview only. Messages are not transmitted or stored online.')">Preview chat room</button>
+  </article>
+  <article id="great-find-module" style="background:#fff;border:1px solid #d9e5f4;border-radius:15px;padding:15px">
+    <h2 style="font-size:16px;margin:0 0 6px">🛍️ Great Find Market</h2>
+    <p style="font-size:13px;margin:0 0 10px;color:#536984">Separate local buy/sell concept for household items, tools, electronics, and furniture.</p>
+    <button type="button" onclick="alert('Marketplace preview only. Listings, payments, and shipping are not enabled.')">Preview marketplace</button>
+  </article>
+  <article style="background:#fff;border:1px solid #d9e5f4;border-radius:15px;padding:15px">
+    <h2 style="font-size:16px;margin:0 0 6px">🏛️ Authorized Agency Mode</h2>
+    <p style="font-size:13px;margin:0;color:#536984">Restricted case details and towing coordination belong behind verified agency permissions in a production app.</p>
+  </article>
+</section>
+
+<footer class="small muted" style="padding:18px 0 4px">AVR responsive prototype · Demo only · Data stays in this browser unless exported.</footer>
+</main>
+</div>
+<div class="mobile-nav"><a class="active" href="#top"><b>⌂</b>Dashboard</a><a href="#mapCard"><b>📍</b>Map</a><a href="#reportDialog" id="mobileReport"><b>＋</b>Report</a><a href="#reports"><b>📄</b>Reports</a><a href="#points"><b>🏆</b>Points</a></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<dialog id="reportDialog" aria-labelledby="dialogTitle">
+<div class="modal-head"><div><h2 id="dialogTitle">＋ Submit a Demo Report</h2><div class="small muted">Creates a local sample case only.</div></div><button class="secondary" type="button" id="closeDialog" aria-label="Close form">✕</button></div>
+<div class="modal-body"><form id="reportForm">
+<div class="form-grid">
+<div class="field"><label for="vehicleType">Vehicle make / type *</label><input id="vehicleType" name="vehicleType" required maxlength="80" placeholder="e.g., Blue sedan"></div>
+<div class="field"><label for="vehicleYear">Year (optional)</label><input id="vehicleYear" name="vehicleYear" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="e.g., 2012"></div>
+<div class="field full"><label for="location">General location (fictional) *</label><input id="location" name="location" required maxlength="120" placeholder="e.g., Demo Lot A / Sample Street"></div>
+<div class="field"><label for="condition">Observed condition *</label><select id="condition" name="condition" required><option value="">Choose condition</option><option>Appears inoperable</option><option>Appears unattended</option><option>Possible safety hazard</option><option>Unknown / needs review</option></select></div>
+<div class="field"><label for="priority">Priority flag</label><select id="priority" name="priority"><option value="Normal">Normal</option><option value="Needs manual review">Needs manual review</option><option value="Possible safety concern">Possible safety concern</option></select></div>
+<div class="field full"><label for="notes">Notes (optional)</label><textarea id="notes" name="notes" maxlength="500" placeholder="Describe only what was observed. Avoid personal information."></textarea></div>
+</div>
+<div class="alert info">This is a prototype, not an official reporting service. Submission will not contact police, an owner, a towing company, or any government agency.</div>
+<div class="form-actions"><button class="secondary" type="button" id="cancelDialog">Cancel</button><button type="submit">Submit Demo Report</button></div>
+</form></div>
+</dialog>
+<script>
+(function(){
+'use strict';
+const STORAGE_KEY='avr-responsive-demo-v1';
+const seed=[
+{id:'AVR-DEMO-0487',vehicle:'Blue sedan',year:'2012',location:'Sample Street / Demo Zone A',condition:'Appears unattended',status:'Under Review',priority:'Needs manual review',notes:'Illustrative sample case; verify before any real-world action.',created:new Date(Date.now()-2*3600000).toISOString()},
+{id:'AVR-DEMO-0486',vehicle:'White pickup',year:'2010',location:'Demo Lot B',condition:'Appears inoperable',status:'New Report',priority:'Normal',notes:'Fictional sample data.',created:new Date(Date.now()-5*3600000).toISOString()},
+{id:'AVR-DEMO-0485',vehicle:'Silver cargo van',year:'2015',location:'Sample Avenue / Demo Zone C',condition:'Unknown / needs review',status:'Verified Abandoned',priority:'Normal',notes:'Demo status only; not an official verification.',created:new Date(Date.now()-24*3600000).toISOString()},
+{id:'AVR-DEMO-0484',vehicle:'Red compact car',year:'2018',location:'Demo Lot D',condition:'Appears unattended',status:'Resolved',priority:'Normal',notes:'Illustrative closed case.',created:new Date(Date.now()-48*3600000).toISOString()}
+];
+let reports=loadReports();
+function loadReports(){try{const raw=localStorage.getItem(STORAGE_KEY);if(raw){const data=JSON.parse(raw);if(Array.isArray(data))return data;}}catch(e){}return seed.map(x=>({...x}));}
+function saveReports(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(reports));}catch(e){showToast('Could not save on this browser. You can still export the report list as CSV.');}}
+function escapeHTML(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function statusClass(s){if(s==='Resolved'||s==='Verified Abandoned')return 'green-b';if(s==='Under Review'||s==='Towing Scheduled')return 'orange-b';if(s==='Needs Manual Review')return 'red-b';if(s==='Owner Notified')return 'purple-b';return 'blue-b';}
+function statusOptions(current){return ['New Report','Under Review','Verified Abandoned','Owner Notified','Towing Scheduled','Resolved','Needs Manual Review'].map(s=>`<option ${s===current?'selected':''}>${s}</option>`).join('');}
+function render(){
+ const total=reports.length,review=reports.filter(r=>r.status==='Under Review'||r.status==='Needs Manual Review').length,verified=reports.filter(r=>r.status==='Verified Abandoned').length,resolved=reports.filter(r=>r.status==='Resolved').length,priority=reports.filter(r=>r.priority!=='Normal'||r.status==='Needs Manual Review').length;
+ document.getElementById('totalCount').textContent=total;document.getElementById('reviewCount').textContent=review;document.getElementById('verifiedCount').textContent=verified;document.getElementById('resolvedCount').textContent=resolved;document.getElementById('priorityCount').textContent=priority;
+ document.getElementById('pointsCount').textContent=(total*2)+' demo points';document.getElementById('pointsBar').style.width=Math.min(100,total*4)+'%';document.getElementById('milestoneText').textContent=total>=25?'Milestone reached (demo only).':`${total} / 25 reports · ${25-total} to go`;document.getElementById('milestoneBar').style.width=Math.min(100,total/25*100)+'%';
+ const q=(document.getElementById('reportSearch').value||document.getElementById('globalSearch').value||'').trim().toLowerCase(),st=document.getElementById('statusFilter').value;
+ const filtered=reports.filter(r=>(!st||r.status===st)&&(!q||[r.id,r.vehicle,r.year,r.location,r.status,r.priority,r.condition,r.notes].join(' ').toLowerCase().includes(q))).sort((a,b)=>b.created.localeCompare(a.created));
+ const rows=document.getElementById('reportRows');
+ if(!filtered.length){rows.innerHTML='<tr><td colspan="6" class="empty">No reports match these filters.</td></tr>';}else{rows.innerHTML=filtered.map(r=>`<tr><td><b>${escapeHTML(r.id)}</b><div class="small muted">${escapeHTML(new Date(r.created).toLocaleDateString())}</div></td><td>${escapeHTML(r.vehicle)}${r.year?' '+escapeHTML(r.year):''}<div class="small muted">${escapeHTML(r.condition)}</div></td><td>${escapeHTML(r.location)}</td><td><select aria-label="Update status for ${escapeHTML(r.id)}" data-status-id="${escapeHTML(r.id)}" class="status-select">${statusOptions(r.status)}</select></td><td><span class="badge ${r.priority==='Normal'?'': 'red-b'}">${escapeHTML(r.priority)}</span></td><td><button class="secondary" data-detail-id="${escapeHTML(r.id)}">Details</button></td></tr>`).join('');}
+ document.getElementById('reportSummary').textContent=`Showing ${filtered.length} of ${total} demo reports.`;
+ const alerts=reports.filter(r=>r.priority!=='Normal'||r.status==='Needs Manual Review').slice(0,4);
+ document.getElementById('alertsList').innerHTML=alerts.length?alerts.map(r=>`<div class="alert"><b>${escapeHTML(r.priority)}</b><br>${escapeHTML(r.id)} · ${escapeHTML(r.location)}<br><span class="small muted">${escapeHTML(r.status)} — demo alert only</span></div>`).join(''):'<div class="alert info">No priority flags in the current demo cases.</div>';
+ if(window.avrRefreshMarkers)window.avrRefreshMarkers();
+}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>t.classList.remove('show'),4200);}
+const dlg=document.getElementById('reportDialog');
+function openDialog(){if(typeof dlg.showModal==='function')dlg.showModal();else dlg.setAttribute('open','');}
+function closeDialog(){if(typeof dlg.close==='function')dlg.close();else dlg.removeAttribute('open');}
+document.getElementById('openReportTop').addEventListener('click',openDialog);document.getElementById('reportAction').addEventListener('click',e=>{e.preventDefault();openDialog();});document.getElementById('mobileReport').addEventListener('click',e=>{e.preventDefault();openDialog();});document.getElementById('closeDialog').addEventListener('click',closeDialog);document.getElementById('cancelDialog').addEventListener('click',closeDialog);
+document.getElementById('reportForm').addEventListener('submit',function(e){
+ e.preventDefault();
+ const vehicle=document.getElementById('vehicleType').value.trim(),location=document.getElementById('location').value.trim(),condition=document.getElementById('condition').value;
+ if(!vehicle||!location||!condition){showToast('Please complete all required fields.');return;}
+ const year=document.getElementById('vehicleYear').value.trim();if(year&&(!/^\d{4}$/.test(year)||Number(year)<1886||Number(year)>new Date().getFullYear()+1)){showToast('Enter a valid four-digit vehicle year.');return;}
+ const nextNum=reports.reduce((m,r)=>Math.max(m,Number((r.id.match(/(\d+)$/)||[])[1]||0)),487)+1;
+ const p=document.getElementById('priority').value;
+ const report={id:'AVR-DEMO-'+String(nextNum).padStart(4,'0'),vehicle,year,location,condition,status:p==='Normal'?'New Report':'Needs Manual Review',priority:p,notes:document.getElementById('notes').value.trim(),created:new Date().toISOString()};
+ reports.push(report);saveReports();render();this.reset();closeDialog();document.getElementById('reportSearch').value='';document.getElementById('globalSearch').value='';document.getElementById('statusFilter').value='';render();document.getElementById('reports').scrollIntoView({behavior:'smooth',block:'start'});showToast('Demo report saved: '+report.id+'. No agency was contacted.');
+});
+document.getElementById('reportRows').addEventListener('change',e=>{const id=e.target.dataset.statusId;if(!id)return;const r=reports.find(x=>x.id===id);if(r){r.status=e.target.value;if(r.status==='Needs Manual Review'&&r.priority==='Normal')r.priority='Needs manual review';saveReports();render();showToast('Updated '+id+' to '+r.status+' (demo only).');}});
+document.getElementById('reportRows').addEventListener('click',e=>{const id=e.target.dataset.detailId;if(!id)return;const r=reports.find(x=>x.id===id);if(!r)return;alert(`DEMO CASE DETAILS\n\n${r.id}\nVehicle: ${r.vehicle}${r.year?' '+r.year:''}\nLocation: ${r.location}\nCondition: ${r.condition}\nStatus: ${r.status}\nPriority: ${r.priority}\nNotes: ${r.notes||'None'}\n\nThis is local demo data only.`);});
+document.getElementById('reportSearch').addEventListener('input',()=>{document.getElementById('globalSearch').value='';render();});document.getElementById('globalSearch').addEventListener('input',()=>{document.getElementById('reportSearch').value='';render();document.getElementById('reports').scrollIntoView({behavior:'smooth',block:'start'});});document.getElementById('statusFilter').addEventListener('change',render);
+document.getElementById('clearFilters').addEventListener('click',()=>{document.getElementById('reportSearch').value='';document.getElementById('globalSearch').value='';document.getElementById('statusFilter').value='';render();});
+document.getElementById('exportBtn').addEventListener('click',exportCSV);document.getElementById('analyticsAction').addEventListener('click',e=>{e.preventDefault();exportCSV();});
+function exportCSV(){const cols=['Case ID','Vehicle','Year','Location','Condition','Status','Priority','Notes','Created'];const rows=reports.map(r=>[r.id,r.vehicle,r.year,r.location,r.condition,r.status,r.priority,r.notes,r.created]);const csv=[cols,...rows].map(row=>row.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='avr-demo-reports.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);showToast('CSV export prepared with '+reports.length+' demo reports.');}
+document.getElementById('resetBtn').addEventListener('click',()=>{if(confirm('Reset the local demo data to the original sample cases? This removes demo reports added in this browser.')){reports=seed.map(x=>({...x}));saveReports();render();showToast('Demo data reset.');}});
+document.getElementById('searchAction').addEventListener('click',()=>{setTimeout(()=>document.getElementById('reportSearch').focus(),100);});document.getElementById('adminAction').addEventListener('click',()=>showToast('Demo admin: change a case status using the dropdown in the report list.'));
+document.getElementById('navigateBtn').addEventListener('click',()=>{const url='https://www.openstreetmap.org/';window.open(url,'_blank','noopener');showToast('Opened OpenStreetMap. Demo case locations are not real navigation destinations.');});
+document.getElementById('mapMode').addEventListener('click',()=>showToast('Map markers are illustrative demo data, not live vehicle tracking.'));
+let mapInstance=null,leafletLoading=false;
+document.getElementById('loadMapBtn').addEventListener('click',loadFreeMap);
+function loadFreeMap(){
+ if(mapInstance){mapInstance.invalidateSize();return;}
+ if(leafletLoading)return;leafletLoading=true;
+ const shell=document.getElementById('mapShell');shell.innerHTML='<div class="map-placeholder"><div><strong>Loading free map…</strong><p>If you are offline or this network blocks map libraries, the dashboard and report tools will still work.</p></div></div>';
+ const css=document.createElement('link');css.rel='stylesheet';css.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';document.head.appendChild(css);
+ const script=document.createElement('script');script.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';script.onload=()=>{
+  if(!window.L){mapFallback();return;}
+  shell.innerHTML='<div id="avrMap" style="height:100%;width:100%"></div>';
+  mapInstance=L.map('avrMap').setView([39.5296,-119.8138],12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors',maxZoom:19}).addTo(mapInstance);
+  window.avrRefreshMarkers=function(){if(!mapInstance)return;if(window.avrMarkers)window.avrMarkers.forEach(m=>mapInstance.removeLayer(m));window.avrMarkers=[];reports.slice(0,30).forEach((r,i)=>{const lat=39.50+(i%5)*.012,lon=-119.84+(i%6)*.013;const marker=L.marker([lat,lon]).addTo(mapInstance).bindPopup('<b>'+escapeHTML(r.id)+'</b><br>'+escapeHTML(r.vehicle)+'<br>'+escapeHTML(r.status)+'<br><small>Illustrative demo marker</small>');window.avrMarkers.push(marker);});};
+  window.avrRefreshMarkers();leafletLoading=false;showToast('Free map loaded. Markers are simulated, not real locations.');
+ };script.onerror=mapFallback;document.body.appendChild(script);
+ function mapFallback(){leafletLoading=false;shell.innerHTML='<div class="map-placeholder"><div><strong>Map could not load</strong><p>The network may be offline or the free map library is unavailable. All report submission, filtering, status updates, and CSV export features still work.</p><button id="retryMapBtn">Try again</button></div></div>';document.getElementById('retryMapBtn').addEventListener('click',loadFreeMap);}
+}
+render();
+})();
+</script>
+
+<script>
+/* AVR installable-app support. Service workers require HTTPS or localhost. */
+(function () {
+  let installPrompt = null;
+  window.addEventListener('beforeinstallprompt', function (event) {
+    event.preventDefault();
+    installPrompt = event;
+    const button = document.getElementById('avrInstallButton');
+    if (button) button.hidden = false;
+  });
+  window.avrInstallApp = async function () {
+    if (!installPrompt) {
+      alert('To install AVR, open this app from its HTTPS website in Chrome, then use the browser menu and choose “Install app” or “Add to Home screen.”');
+      return;
+    }
+    installPrompt.prompt();
+    await installPrompt.userChoice;
+    installPrompt = null;
+  };
+  window.addEventListener('load', function () {
+    if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+      navigator.serviceWorker.register('./service-worker.js').catch(function (error) {
+        console.warn('AVR offline support could not be enabled:', error);
+      });
+    }
+    const nav = document.querySelector('.avr-brand-strip');
+    if (nav && !document.getElementById('avrInstallButton')) {
+      const button = document.createElement('button');
+      button.id = 'avrInstallButton';
+      button.type = 'button';
+      button.textContent = 'Install AVR';
+      button.hidden = true;
+      button.style.cssText = 'margin-left:auto;align-self:center;background:#fff;color:#0757c9;border:1px solid #cfe0fa;padding:10px 13px;border-radius:10px;font-weight:750;cursor:pointer;white-space:nowrap';
+      button.addEventListener('click', window.avrInstallApp);
+      nav.appendChild(button);
+      if (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) {
+        button.textContent = 'AVR Installed';
+        button.hidden = false;
+        button.disabled = true;
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

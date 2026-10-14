@@ -1,0 +1,24 @@
+{
+  "id": "./",
+  "name": "AVR Dashboard Hub",
+  "short_name": "AVR Hub",
+  "description": "Abandoned Vehicle Report dashboard app prototype",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f2f6fc",
+  "theme_color": "#0757c9",
+  "categories": [
+    "utilities",
+    "maps"
+  ],
+  "icons": [
+    {
+      "src": "./icons/avr-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
